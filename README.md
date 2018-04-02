@@ -1,6 +1,10 @@
 # Angular 5 - Canvas Image Viewer
 
-This project generate a image viewer using canvas.
+This project generates an image viewer using canvas.
+
+## Disclaimer :warning: :fire: :loudspeaker:
+
+> **Branch `develop` in this very repo is a collection of all features and fixes I've PRed to the original/source [repo](https://github.com/hallysonh/ngx-imageviewer). I needed them all and quite fast, so I've also published a scoped package in the [registry](https://www.npmjs.com/package/@onlytabs/ngx-imageviewer). Feel free to use it, but have in mind it is more a playground than a stable and well thought set of features.**
 
 ## Features
 

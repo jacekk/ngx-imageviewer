@@ -124,6 +124,7 @@ export const IMAGEVIEWER_CONFIG_DEFAULT: ImageViewerConfig = {
   bgStyle: '#ECEFF1', // component background style
   scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
   rotateStepper: false, // touch rotate should rotate only 90 to 90 degrees
+  showPaginator: true,
   loadingMessage: 'Loading...',
   loadingErrorMessage: 'Whoops, something bad happend.',
   messageStyle: {

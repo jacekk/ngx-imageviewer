@@ -59,6 +59,28 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
     this.resetImage();
   }
 
+  @Input('nextPage') set nextPageBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.nextPage(); });
+  };
+  @Input('prevPage') set prevPageBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.previousPage(); });
+  };
+  @Input('zoomOut') set zoomOutBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.zoomOut() });
+  };
+  @Input('zoomIn') set zoomInBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.zoomIn(); });
+  };
+  @Input('rotateLeft') set rotateLeftBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.rotateLeft(); });
+  };
+  @Input('rotateRight') set rotateRightBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.rotateRight(); });
+  };
+  @Input('resetZoom') set resetZoomBinding(value: EventEmitter<void>) {
+    value.subscribe(() => { this.resetImage(); });
+  };
+
   @ViewChild('imageContainer') canvasRef: ElementRef;
   //#endregion
 
@@ -122,6 +144,7 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
     this._rotateLeftButton = new Button(this.config.rotateLeftButton, this.config.buttonStyle);
     this._rotateRightButton = new Button(this.config.rotateRightButton, this.config.buttonStyle);
     this._resetButton = new Button(this.config.resetButton, this.config.buttonStyle);
+
     this._buttons = [
       this._zoomOutButton,
       this._zoomInButton,
@@ -415,15 +438,21 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
     const fontSize = 25;
 
     ctx.save();
-    this._beforePageButton.draw(ctx, x1, y, radius);
-    this._nextPageButton.draw(ctx, x3, y, radius);
+    if (this.config.beforePageButton.show) {
+      this._beforePageButton.draw(ctx, x1, y, radius);
+    }
+    if (this.config.nextPageButton.show) {
+      this._nextPageButton.draw(ctx, x3, y, radius);
+    }
     ctx.restore();
 
-    ctx.save();
-    ctx.font = fontSize + 'px Verdana';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, x2, this._canvas.height - padding - fontSize / 2, labelWidth);
-    ctx.restore();
+    if (this.config.showPaginator) {
+      ctx.save();
+      ctx.font = fontSize + 'px Verdana';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x2, this._canvas.height - padding - fontSize / 2, labelWidth);
+      ctx.restore();
+    }
   }
 
   private drawRoundRectangle(ctx, x, y, width, height, radius, fill, stroke) {

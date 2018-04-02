@@ -6,10 +6,11 @@ export class ImageViewerConfig {
   bgStyle?: string;
   scaleStep?: number;
   rotateStepper?: boolean;
-  buttonStyle?: ButtonStyle;
+  showPaginator?: boolean;
   loadingMessage?: string;
   loadingErrorMessage?: string;
   messageStyle?: MessageStyle;
+  buttonStyle?: ButtonStyle;
   tooltips?: {
     enabled?: boolean,
     bgStyle?: string,
@@ -64,6 +65,7 @@ export let IMAGEVIEWER_CONFIG_DEFAULT: ImageViewerConfig = {
   bgStyle: '#ECEFF1', // component background style
   scaleStep: 0.1, // zoom scale step (using the zoom in/out buttons)
   rotateStepper: false,
+  showPaginator: true,
   loadingMessage: 'Loading...',
   loadingErrorMessage: 'Whoops, something bad happend.',
   messageStyle: {

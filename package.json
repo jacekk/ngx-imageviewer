@@ -1,13 +1,13 @@
 {
   "name": "@onlytabs/ngx-imageviewer",
-  "version": "1.3.0-alpha.1",
+  "version": "1.3.0-alpha.2",
   "license": "MIT",
   "author": {
     "name": "Hallyson Almeida",
     "email": "hallysonh@gmail.com"
   },
   "repository": {
-    "url": "https://github.com/hallysonh/ngx-imageviewer"
+    "url": "https://github.com/jacekk/ngx-imageviewer"
   },
   "keywords": [
     "image",

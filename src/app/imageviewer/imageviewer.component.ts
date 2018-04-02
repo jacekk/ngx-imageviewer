@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, Renderer, Inject, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ElementRef, AfterViewInit, Renderer, Inject, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -8,7 +8,7 @@ import {
   ButtonConfig,
   ButtonStyle
 } from './imageviewer.config';
-import { Viewport, Button, toSquareAngle, ResourceLoader } from './imageviewer.model';
+import { Viewport, Button, toSquareAngle, ResourceLoader, ResourceLoadState } from './imageviewer.model';
 import { Subscription } from 'rxjs/Subscription';
 import { ImageResourceLoader } from './image.loader';
 import { PdfResourceLoader } from './pdf.loader';
@@ -61,6 +61,8 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('imageContainer') canvasRef: ElementRef;
   //#endregion
+
+  @Output() onLoadError = new EventEmitter();
 
   //#region Private properties
   // Canvas 2D context
@@ -190,6 +192,7 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
         }
       });
       this._resource.setUp();
+      this._resource.setLoadErrorEmitter(this.onLoadError);
       this.resetImage();
       if (this._context) { this.updateCanvas(); }
     }
@@ -345,7 +348,7 @@ export class ImageViewerComponent implements AfterViewInit, OnDestroy {
       this._resource.draw(ctx, this.config, this._canvas, () => {
         ctx.restore();
 
-        if (vm._resource.loaded) {
+        if (vm._resource.loadState === ResourceLoadState.Loaded) {
           // draw buttons
           this.drawButtons(ctx);
 

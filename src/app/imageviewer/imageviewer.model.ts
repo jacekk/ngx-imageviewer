@@ -1,7 +1,8 @@
 import { EventEmitter } from '@angular/core';
-import { ButtonConfig, ButtonStyle, ImageViewerConfig, IMAGEVIEWER_CONFIG_DEFAULT } from './imageviewer.config';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+
+import { ButtonConfig, ButtonStyle, ImageViewerConfig, IMAGEVIEWER_CONFIG_DEFAULT } from './imageviewer.config';
 
 export class Button {
   //#region Properties
@@ -122,6 +123,17 @@ export enum ResourceLoadState {
   Pristine,
 }
 
+export enum ResourceType {
+  Image = 'image',
+  PDF = 'pdf',
+}
+
+export interface ResourceState {
+  currentPage: number;
+  numOfPages: number;
+  type: ResourceType;
+}
+
 export abstract class ResourceLoader {
   public src: string;
   public sourceDim: { width: number, height: number };
@@ -136,6 +148,7 @@ export abstract class ResourceLoader {
 
   protected _image;
   protected onLoadError = new EventEmitter();
+  protected onResourceStateChange = new EventEmitter<ResourceState>();
   protected resourceChange = new Subject<string>();
 
   abstract setUp();
@@ -223,6 +236,10 @@ export abstract class ResourceLoader {
   }
 
   public onResourceChange() { return this.resourceChange.asObservable(); }
+
+  public setResourceStateChangeEmitter(emitter) {
+    this.onResourceStateChange = emitter;
+  }
 }
 
 export function toSquareAngle(angle: number) {

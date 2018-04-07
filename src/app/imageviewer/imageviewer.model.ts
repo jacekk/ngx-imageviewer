@@ -124,8 +124,8 @@ export enum ResourceLoadState {
 }
 
 export enum ResourceType {
-  Image = 'image',
-  PDF = 'pdf',
+  Image,
+  PDF,
 }
 
 export interface ResourceState {
